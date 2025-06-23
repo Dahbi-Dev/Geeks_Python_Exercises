@@ -32,3 +32,4 @@ dog2 = Dog("Max", 3, 25)
 print(dog2.bark())
 
 print(dog1.fight(dog2))
+print("---------------------")
