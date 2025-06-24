@@ -37,9 +37,9 @@ class PetDog(Dog):
 dog = PetDog("Rex", 4, 30)
 print(dog.bark())    
 print("-------------")
-print(dog.train()) 
+dog.train()
 
 print("-------------")  
-print(dog.do_a_trick()) 
+dog.do_a_trick()
 print("-------------")  
             
