@@ -14,7 +14,7 @@
 
 # 🌟 Exercise 3: Dogs Domesticated
 from Exercise2 import Dog
-
+import random
 class PetDog(Dog):
     def __init__(self, name, age, weight, trained=False):
         super().__init__(name, age, weight)
@@ -25,8 +25,21 @@ class PetDog(Dog):
         print(self.bark() + " and is now trained.")
     def play(self, *args):
         print(f"{self.name} plays with " + ", ".join(dog.name for dog in args) + " all play together.")
+    def do_a_trick(self):
+        if self.trained:
+            tricks = ["does a barrel roll", "stands on his back legs", "shakes your hand", "plays dead"]
+            trick = random.choice(tricks)
+            print(f"{self.name} {trick}.")
+        else:
+            print(f"{self.name} is not trained to do tricks.")
         
 
 dog = PetDog("Rex", 4, 30)
-print(dog.bark())       
-dog.train()             
+print(dog.bark())    
+print("-------------")
+print(dog.train()) 
+
+print("-------------")  
+print(dog.do_a_trick()) 
+print("-------------")  
+            
