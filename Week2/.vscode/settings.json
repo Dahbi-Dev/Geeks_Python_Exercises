@@ -6,8 +6,8 @@
             "port": 7070,
             "driver": "PostgreSQL",
             "name": "postgres",
-            "username": "postgres",
-            "database": "restaurant_db"
+            "database": "auth_db",
+            "username": "postgres"
         }
     ]
 }
