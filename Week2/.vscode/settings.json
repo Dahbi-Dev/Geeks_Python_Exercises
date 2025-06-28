@@ -8,6 +8,15 @@
             "name": "postgres",
             "database": "auth_db",
             "username": "postgres"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 7070,
+            "driver": "PostgreSQL",
+            "name": "postgres",
+            "database": "countries_db",
+            "username": "postgres"
         }
     ]
 }
