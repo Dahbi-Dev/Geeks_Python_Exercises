@@ -17,14 +17,23 @@ let guestList = {
   sam: "Argentina"
 };
 
+const text = document.getElementById("text")
+
 console.log("\nExercise 2: Attendance");
 
 let userName = prompt("What is your name?");
+let lower_name = userName.toLocaleLowerCase()
 
-if (userName in guestList) {
-  console.log(`Hi! I'm ${userName}, and I'm from ${guestList[userName]}.`);
+if (lower_name in guestList) {
+  console.log(`Hi! I'm ${lower_name}, and I'm from ${guestList[lower_name]}.`);
+  text.textContent = `Hi! I'm ${lower_name}, and I'm from ${guestList[lower_name]}.`;
+  text.style.backgroundColor = 'green'
+  text.style.color = 'white';
 } else {
   console.log("Hi! I'm a guest.");
+  text.textContent = "Hi! I'm a guest."
+  text.style.backgroundColor = 'red';
+  text.style.color = 'white';
 }
 
 
