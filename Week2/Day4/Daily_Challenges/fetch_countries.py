@@ -1,44 +1,36 @@
-import random
+from flask import Flask, jsonify
 import requests
-import psycopg2
+import random
+from db import get_connection  # your existing db.py
 
-# Database configuration
-DB_CONFIG = {
-    'dbname': 'countries_db',
-    'user': 'postgres',
-    'password': 'root',
-    'host': 'localhost',
-    'port': 7070,
-}
+app = Flask(__name__)
 
-def fetch_countries():
-    """Fetch countries from REST Countries API"""
+@app.route("/save-countries", methods=["GET"])
+def fetch_and_save_countries():
     url = "https://restcountries.com/v3.1/all?fields=name,capital,flags,subregion,population"
-    
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
-        return response.json()
-    except requests.RequestException as e:
-        print(f"API Error: {e}")
-        return None
+        countries = response.json()
+    except Exception as e:
+        print(f"API fetch error: {e}")
+        return jsonify({"error": "Failed to fetch countries"}), 500
 
-def extract_data(country):
-    """Extract required fields from country data"""
-    name = country.get("name", {}).get("common", "Unknown")
-    capital = country.get("capital", ["Unknown"])[0]
-    flag = country.get("flags", {}).get("png", "")
-    subregion = country.get("subregion", "Unknown")
-    population = country.get("population", 0)
-    
-    return (name, capital, flag, subregion, population)
+    selected = random.sample(countries, min(11, len(countries)))
+    data = []
+    for c in selected:
+        name = c.get("name", {}).get("common", "Unknown")
+        capital_list = c.get("capital")
+        capital = capital_list[0] if capital_list and len(capital_list) > 0 else "Unknown"
+        flag = c.get("flags", {}).get("png", "")
+        subregion = c.get("subregion", "Unknown")
+        population = c.get("population", 0)
+        data.append((name, capital, flag, subregion, population))
 
-def save_to_db(countries_data):
-    """Save countries to database"""
     try:
-        conn = psycopg2.connect(**DB_CONFIG)
+        conn = get_connection()
         cur = conn.cursor()
-        
+
         # Create table if not exists
         cur.execute("""
             CREATE TABLE IF NOT EXISTS countries (
@@ -50,53 +42,47 @@ def save_to_db(countries_data):
                 population BIGINT
             )
         """)
-        
+
         inserted = 0
-        for data in countries_data:
-            try:
-                cur.execute("""
-                    INSERT INTO countries (name, capital, flag, subregion, population) 
-                    VALUES (%s, %s, %s, %s, %s)
-                    ON CONFLICT (name) DO NOTHING
-                """, data)
-                
-                if cur.rowcount > 0:
-                    inserted += 1
-                    print(f"✅ {data[0]}")
-                    
-            except Exception as e:
-                print(f"❌ Error: {data[0]} - {e}")
-        
+        for d in data:
+            cur.execute("""
+                INSERT INTO countries (name, capital, flag, subregion, population)
+                VALUES (%s, %s, %s, %s, %s)
+                ON CONFLICT (name) DO NOTHING
+            """, d)
+            if cur.rowcount > 0:
+                inserted += 1
+
         conn.commit()
+
+        # Fetch all countries after insert
+        cur.execute("SELECT * FROM countries ORDER BY name")
+        all_countries = cur.fetchall()
+
         cur.close()
         conn.close()
-        
-        print(f"\n📊 Inserted {inserted} countries")
-        return inserted
-        
-    except psycopg2.Error as e:
-        print(f"Database Error: {e}")
-        return 0
 
-def main():
-    """Main function"""
-    print("🌍 Fetching countries...")
-    
-    # Fetch all countries
-    countries = fetch_countries()
-    if not countries:
-        print("❌ Failed to fetch countries")
-        return
-    
-    print(f"✅ Got {len(countries)} countries")
-    
-    # Pick 10 random countries
-    selected = random.sample(countries, min(10, len(countries)))
-    print(f"🎲 Selected {len(selected)} random countries")
-    
-    # Extract data and save
-    data = [extract_data(country) for country in selected]
-    save_to_db(data)
+        return jsonify({
+            "inserted": inserted,
+            "total": len(all_countries),
+            "countries": all_countries
+        })
+
+    except Exception as e:
+        print(f"DB error: {e}")
+        return jsonify({"error": "Database error"}), 500
+
+
+
+@app.route("/", methods=["GET"])
+def home():
+    return """
+    <h1>Welcome to the Countries API!</h1>
+    <p><a href="/save-countries">Fetch and Save 10 Random Countries</a></p>
+    """
+   
 
 if __name__ == "__main__":
-    main()
+   
+
+    app.run(debug=True, port=5000)

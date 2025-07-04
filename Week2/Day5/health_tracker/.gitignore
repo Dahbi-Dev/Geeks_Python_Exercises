@@ -1,0 +1,46 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Environment variables
+.env
+
+# macOS system files
+.DS_Store
+
+# Python logs
+*.log
+
+# Jupyter Notebook checkpoints (if any)
+.ipynb_checkpoints
+
+# Plot images
+/static/*.png
+
+# Cache and temporary files
+*.swp
+*.bak
+*.tmp
+.cache/
+*.sqlite3
+
+# VSCode settings (optional)
+.vscode/
+
+# Pytest cache
+.pytest_cache/
+
+# MyPy, coverage reports
+.mypy_cache/
+coverage/
+htmlcov/
+
+# Pycharm
+.idea/
