@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Challenge: Create a Solar System</title>
+  <style>
+    body {
+      background-color: black;
+      padding: 10px;
+    }
+
+    .planet {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      text-align: center;
+      padding: 10px;
+      position: relative;
+      border: 2px solid white;
+      margin: 10px;
+      display: inline-block;
+    }
+
+    .moon {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgb(237, 237, 237);
+      border: 2px solid red;
+    }
+
+    .mercury { background-color: gray; }
+    .venus   { background-color: orange; }
+    .earth   { background-color: blue; }
+    .mars    { background-color: red; }
+    .jupiter { background-color: brown; }
+    .saturn  { background-color: khaki; }
+    .uranus  { background-color: lightblue; }
+    .neptune { background-color: darkblue; }
+  </style>
+</head>
+<body>
+
+<section class="listPlanets"></section>
+
+<script src="script.js"></script>
+</body>
+</html>
