@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab { padding: 10px 20px; background: #ddd; border: none; cursor: pointer; border-radius: 4px; transition: all 0.3s ease; }
+        .tab.active { background: #007bff; color: white; }
+        .tab:hover { background: #0056b3; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px; margin-bottom: 10px; transition: background 0.3s ease; }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .result { margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 4px; border-left: 4px solid #007bff; }
+        .user-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 4px; background: #f9f9f9; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .stat-card { padding: 15px; background: #f8f9fa; border-radius: 4px; text-align: center; border: 1px solid #e9ecef; }
+        .chart-container { text-align: center; margin-top: 20px; }
+        .chart-container img { max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .visualization-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .notification { position: fixed; top: 20px; right: 20px; padding: 15px; border-radius: 4px; color: white; z-index: 1000; max-width: 300px; }
+        .notification.success { background: #28a745; }
+        .notification.error { background: #dc3545; }
+        .notification.info { background: #17a2b8; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .loading { text-align: center; color: #666; font-style: italic; padding: 20px; }
+        .chart-section { margin-bottom: 30px; }
+        .chart-section h3 { margin-bottom: 15px; color: #333; }
+        .error-message { color: #dc3545; font-size: 14px; margin-top: 5px; }
+        .success-message { color: #28a745; font-size: 14px; margin-top: 5px; }
+        .connection-status { 
+            position: fixed; 
+            top: 10px; 
+            left: 10px; 
+            padding: 5px 10px; 
+            border-radius: 4px; 
+            font-size: 12px; 
+            z-index: 1000; 
+        }
+        .connection-status.online { background: #28a745; color: white; }
+        .connection-status.offline { background: #dc3545; color: white; }
+        @media (max-width: 768px) { 
+            .grid { grid-template-columns: 1fr; }
+            .tabs { flex-direction: column; }
+            .visualization-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="connection-status" id="connectionStatus">Checking connection...</div>
+    
+    <div class="container">
+        <h1>Health Tracker</h1>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('add')">Add User</button>
+            <button class="tab" onclick="showTab('search')">Search Users</button>
+            <button class="tab" onclick="showTab('statistics')">Statistics</button>
+            <button class="tab" onclick="showTab('visualizations')">Visualizations</button>
+            <button class="tab" onclick="showTab('competitions')">Competitions</button>
+        </div>
+
+        <!-- Add User Tab -->
+        <div id="add" class="tab-content active">
+            <div class="grid">
+                <div>
+                    <h2>Add New User</h2>
+                    <form id="userForm">
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <input type="text" id="name" placeholder="Enter name (optional)">
+                        </div>
+                        <div class="form-group">
+                            <label>Height (cm):</label>
+                            <input type="number" id="height" required min="1" step="0.1" placeholder="e.g., 175">
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (kg):</label>
+                            <input type="number" id="weight" required min="1" step="0.1" placeholder="e.g., 70">
+                        </div>
+                        <div class="form-group">
+                            <label>Age:</label>
+                            <input type="number" id="age" required min="1" max="120" placeholder="e.g., 25">
+                        </div>
+                        <button type="submit">Calculate BMI & Add User</button>
+                    </form>
+                </div>
+                <div>
+                    <h2>Results</h2>
+                    <div id="result" class="result" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Users Tab -->
+        <div id="search" class="tab-content">
+            <div class="grid">
+                <div>
+                    <h2>Search Users</h2>
+                    <div class="form-group">
+                        <input type="text" id="searchQuery" placeholder="Search by name...">
+                    </div>
+                    <button onclick="searchUsers()">Search</button>
+                    <button onclick="showAllUsers()">Show All Users</button>
+                    
+                    <div id="searchResults" style="margin-top: 20px;"></div>
+                </div>
+                <div>
+                    <h2>Quick Charts</h2>
+                    <div class="visualization-buttons">
+                        <button onclick="showChart('bmi')">BMI Chart</button>
+                        <button onclick="showChart('bmi-distribution')">BMI Distribution</button>
+                        <button onclick="showChart('age-distribution')">Age Distribution</button>
+                    </div>
+                    <div id="chartContainer" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Tab -->
+        <div id="statistics" class="tab-content">
+            <h2>Database Statistics</h2>
+            <button onclick="refreshStatistics()">Refresh Statistics</button>
+            <div id="statisticsContainer"></div>
+        </div>
+
+        <!-- Visualizations Tab -->
+        <div id="visualizations" class="tab-content">
+            <h2>Data Visualizations</h2>
+            <div class="visualization-buttons">
+                <button onclick="loadVisualization('user-data')">User BMI Data</button>
+                <button onclick="loadVisualization('bmi-distribution')">BMI Distribution</button>
+                <button onclick="loadVisualization('age-distribution')">Age Distribution</button>
+                <button onclick="loadVisualization('bmi-age-scatter')">BMI vs Age Scatter</button>
+                <button onclick="loadVisualization('food')">Food Recommendations</button>
+                <button onclick="loadVisualization('exercises')">Exercise Recommendations</button>
+                <button onclick="loadVisualization('competitions')">Competition Overview</button>
+            </div>
+            
+            <div id="visualizationContainer">
+                <div class="chart-section">
+                    <h3>Select a visualization above to view charts</h3>
+                    <p>These charts provide insights into your health data and recommendations.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Competitions Tab -->
+        <div id="competitions" class="tab-content">
+            <div class="grid">
+                <div>
+                    <h2>Create Competition</h2>
+                    <form id="competitionForm">
+                        <div class="form-group">
+                            <label>Competition Name:</label>
+                            <input type="text" id="compName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <textarea id="compDescription" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Target Body Type:</label>
+                            <select id="targetBodyType">
+                                <option value="">Any</option>
+                                <option value="Underweight">Underweight</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Overweight">Overweight</option>
+                                <option value="Obese">Obese</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Min Age:</label>
+                            <input type="number" id="minAge" min="1" max="120">
+                        </div>
+                        <div class="form-group">
+                            <label>Max Age:</label>
+                            <input type="number" id="maxAge" min="1" max="120">
+                        </div>
+                        <div class="form-group">
+                            <label>Max Participants:</label>
+                            <input type="number" id="maxParticipants" value="50" min="1">
+                        </div>
+                        <button type="submit">Create Competition</button>
+                    </form>
+                </div>
+                <div>
+                    <h2>Competitions List</h2>
+                    <button onclick="loadCompetitions()">Refresh List</button>
+                    <div id="competitionsContainer"></div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h2>Competition Management</h2>
+                <div class="form-group">
+                    <label>Select Competition:</label>
+                    <select id="competitionSelect">
+                        <option value="">Select a competition...</option>
+                    </select>
+                </div>
+                <button onclick="showParticipants()">Show Participants</button>
+                <button onclick="showEligibleUsers()">Show Eligible Users</button>
+                <div id="participantsContainer"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="scripts.js"></script>
+
+
+</body>
+</html>
