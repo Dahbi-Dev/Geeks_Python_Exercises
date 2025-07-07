@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coloring Squares Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Coloring Squares Game</h1>
+    
+    <div class="container">
+        <div class="control-panel">
+            <button class="clear-btn" onclick="clearCanvas()">Clear</button>
+            
+            <div class="color-palette">
+                <div class="color-square" style="background-color: #ff0000" data-color="#ff0000"></div>
+                <div class="color-square" style="background-color: #ff8000" data-color="#ff8000"></div>
+                <div class="color-square" style="background-color: #ffff00" data-color="#ffff00"></div>
+                <div class="color-square" style="background-color: #80ff00" data-color="#80ff00"></div>
+                <div class="color-square" style="background-color: #00ff00" data-color="#00ff00"></div>
+                <div class="color-square" style="background-color: #00ff80" data-color="#00ff80"></div>
+                <div class="color-square" style="background-color: #00ffff" data-color="#00ffff"></div>
+                <div class="color-square" style="background-color: #0080ff" data-color="#0080ff"></div>
+                <div class="color-square" style="background-color: #0000ff" data-color="#0000ff"></div>
+                <div class="color-square" style="background-color: #8000ff" data-color="#8000ff"></div>
+                <div class="color-square" style="background-color: #ff00ff" data-color="#ff00ff"></div>
+                <div class="color-square" style="background-color: #ff80ff" data-color="#ff80ff"></div>
+                <div class="color-square" style="background-color: #ffcccc" data-color="#ffcccc"></div>
+                <div class="color-square" style="background-color: #cccccc" data-color="#cccccc"></div>
+                <div class="color-square" style="background-color: #808080" data-color="#808080"></div>
+                <div class="color-square" style="background-color: #000000" data-color="#000000"></div>
+                <div class="color-square selected" style="background-color: #ffffff" data-color="#ffffff"></div>
+            </div>
+            
+            <div class="current-color">
+                <div>Current Color:</div>
+                <div class="color-indicator" style="background-color: #ffffff"></div>
+            </div>
+        </div>
+        
+        <div class="canvas-container">
+            <div class="drawing-grid" id="drawingGrid"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
