@@ -32,3 +32,4 @@ console.log(`3- invokes the arrow function ${weight3(6)}`)
 
 
 
+
