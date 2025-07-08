@@ -10,20 +10,19 @@ function compareToTen(num) {
     });
 }
 
-
-// In the example, the promise should reject
 compareToTen(15)
     .then(result => console.log(result))
     .catch(error => console.log(error));
 
-// In the example, the promise should resolve
 compareToTen(8)
     .then(result => console.log(result))
     .catch(error => console.log(error));
 
+
+
+
     // 🌟 Exercise 2 : Promises
-    // Instructions
-    // Create a promise that resolves itself in 4 seconds and returns a “success” string.
+
     function successFunc() {
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -34,3 +33,12 @@ compareToTen(8)
 
     successFunc()
         .then(result => console.log(result));
+
+
+//  Exercise 3 : Resolve & Reject
+
+Promise.resolve(3)
+    .then(result => console.log(result));
+
+Promise.reject("Boo!")
+    .catch(error => console.log(error));
