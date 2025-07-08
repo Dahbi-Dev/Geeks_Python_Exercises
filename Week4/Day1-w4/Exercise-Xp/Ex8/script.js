@@ -2,7 +2,7 @@ function makeJuice(size) {
     const ingredients = [];
 
     function addIngredients([ing1, ing2, ing3]) {
-        ingredients.push([ing1, ing2, ing3]);
+        ingredients.push(ing1, ing2, ing3);
         document.getElementById("message").textContent = `The client wants a
          ${size} juice, containing ${ing1}, 
         ${ing2}, ${ing3}`;
