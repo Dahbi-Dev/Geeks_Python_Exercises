@@ -1,78 +1,97 @@
-// 🌟 Exercise 1 : Scope
-// 1- Analyse the code below, and predict what will be the value of a in all the following functions.
-// 2- Write your prediction as comments in a js file. Explain your predictions.
-// #1
-function funcOne() {
-    let a = 5;
-    if(a > 1) {
-        a = 3;
+// 🌟 Exercise 7 : Welcome
+
+
+// John has just signed in to your website and you want to welcome him.
+
+// 1- Create a Navbar in your HTML file.
+
+// 2- In your js file, create a self invoking funtion that takes 1 argument: 
+//    the name of the user that just signed in.
+
+const user = (username) =>{
+    console.log(`The user ${username} just signed in`)
+    // create user message div
+    const div = document.createElement("div")
+    div.id = "container"
+    div.className = "message"
+    div.style.display = "none"
+    div.style.justifyContent = "end"
+    div.style.margin = "20px"
+    div.style.gap = "20px"
+    
+    // username 
+    const userText = document.createElement("p")
+    userText.textContent = username
+    userText.style.fontFamily = "sans-serif"
+    div.appendChild(userText)
+    
+    
+    
+    
+    // create user picture
+    const img = document.createElement("img")
+    img.src = "https://picsum.photos/200/300"
+    img.id = "image"
+    img.alt = "user_image"
+    img.style.height = "40px"
+    img.style.width = "40px"
+    img.style.borderRadius = "20px"
+    
+    div.appendChild(img)
+    
+    
+    document.getElementById("navbar").appendChild(div)
+
+   
+
+} 
+
+ const div2 = document.createElement("div")
+    div2.id = "signin"
+    div2.style.display = "flex";
+    div2.style.justifyContent = "center";
+    div2.style.alignItems = "center";
+    div2.style.height = "100vh"; // full screen height
+    div2.style.backgroundColor = "#f0f0f0";
+
+
+
+    const input = document.createElement("input")
+    input.type = "text"
+    
+
+
+    const signin = document.createElement("button")
+    signin.textContent= "Sign in"
+    signin.style.backgroundColor = "white"
+    signin.style.border = "1px solid black"
+    signin.style.borderRadius = "8px"
+    signin.style.fontSize  = "18px"
+    signin.style.display = "flex"
+    signin.style.cursor = "pointer"
+
+
+    signin.onclick = function(){
+        const username = input.value.trim()
+        if (username) {
+            user(username)
+            document.getElementById("container").style.display = "flex"
+            div2.style.display = "none"
+        } else {
+                    alert("Please enter your name.");
+
+            
+        }
     }
-    alert(`inside the funcOne function ${a}`);
-}
-
-// #1.1 - run in the console:
-funcOne()
-// #1.2 What will happen if the variable is declared 
-// this will return the 3  because the variable a in the same scope like in local it will return 3
-// with const instead of let ?
-
-//#2
-const a = 0;
-function funcTwo() {
-    a = 5;
-}
-
-function funcThree() {
-    alert(`inside the funcThree function ${a}`);
-}
-
-// #2.1 - run in the console:
-funcThree()
-funcTwo()
-funcThree()
-// #2.2 What will happen if the variable is declared 
-// with const instead of let ?
-// second : when we change the varialbe to const the funcTwo was not able to change the a value
-//  it shows and eroor of Assignment to constant variable
-
-// #3
-function funcFour() {
-    window.a = "hello";
-}
+    
+    div2.appendChild(input)
+    document.body.appendChild(div2)
+    div2.appendChild(signin)
+    
+    
+    
 
 
-function funcFive() {
-    alert(`inside the funcFive function ${a}`);
-}
 
-// #3.1 - run in the console:
-funcFour()
-funcFive()
-
-//#4
-let a = 1;
-function funcSix() {
-    let a = "test";
-    alert(`inside the funcSix function ${a}`);
-}
-
-
-// #4.1 - run in the console:
-funcSix()
-// #4.2 What will happen if the variable is declared 
-// with const instead of let ?
-// Cannot access 'a' before initialization
-
-
-//#5
-const a = 2;
-if (true) {
-     let a = 5;
-    alert(`in the if block ${a}`);
-}
-alert(`outside of the if block ${a}`);
-
-// #5.1 - run the code in the console
-// #5.2 What will happen if the variable is declared 
-// with const instead of let ?
-// nothing because the  both variables are block-scoped and independent
+// 3- The function should add a div in the nabvar, 
+//    displaying the name of the user and his profile picture.
