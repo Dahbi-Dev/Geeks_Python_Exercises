@@ -1,23 +1,20 @@
-document.title = "Exercise 3";
-document.getElementById("Ex3").textContent = "Exercise XP 3"
+// ------1------
+const fruits = ["apple", "orange"];
+const vegetables = ["carrot", "potato"];
+
+const result = ['bread', ...vegetables, 'chicken', ...fruits];
+console.log(result);
+
+// ['bread', 'carrot', 'potato', 'chicken', 'apple', 'orange']
+
+// ------2------
+const country = "USA";
+console.log([...country]);
+//  ['U', 'S', 'A']
+
+// ------Bonus------
+let newArray = [...[,,]];
+console.log(newArray);
+// [undefined, undefined]
 
 
-// 🌟 Exercise 3 : Is it a string ?
-
-// Write a JavaScript arrow function 
-// that checks whether the value of the argument passed,
-//  is a string or not. The function should return true or false
-// Check out the example below to see the expected output
-
-const is_string = (word) => {
-    if (typeof word === "string") {
-        return true
-        
-    } else {
-        return false
-    }
-}
-
-const is_it = is_string(5)
-console.log(is_it)
-document.getElementById("is").textContent = is_it
