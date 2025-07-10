@@ -24,8 +24,29 @@ const gameInfo = [{
     },
 ];
 
-const usernames = gameInfo.forEach(names => {
-    const usernameArry = new Array(names.username)
-})
+// -------------------------------
 
-console.log(usernames)
+console.log("---Q1----")
+let usernameArry = []
+gameInfo.forEach((names, index) => {
+    usernameArry.push(`${names.username}!`)
+})
+console.log(usernameArry)
+
+// -------------------------------
+
+console.log("---Q2----")
+let nameOfPlayers = []
+gameInfo.forEach((players => {
+    if (players.score > 5) {
+        nameOfPlayers.push(players.username)
+    }
+}))
+console.log(nameOfPlayers)
+
+// -------------------------------
+
+console.log("---Q3----")
+const totalScore = gameInfo.reduce((acc, total) => (acc + total.score), 0)
+
+console.log(totalScore)
