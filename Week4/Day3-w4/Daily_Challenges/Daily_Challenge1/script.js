@@ -1,3 +1,4 @@
+
 class Video {
     constructor(title, uploader, time) {
         this.title = title
@@ -15,6 +16,8 @@ const firstVid = new Video("firstTitle", "Houssam", 5)
 firstVid.watch()
 const secondVid = new Video("SecodTitle", "Khalid", 34)
 secondVid.watch()
+
+
 
 const videoDataArray = [
     { title: "Cats Compilation", uploader: "Maya", time: 150 },
