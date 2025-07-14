@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: url("https://github.com/devtlv/studentsGitHub/blob/master/JS/Week%204/Day5/Mini%20Projects/Mini%20Project%201%20(Robots)/circuit-pattern.png?raw=true");
+  background-color: #006af4;
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  background-color: #66e3a0;
+  padding: 20px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+}
+
+header h1 {
+  margin: 0;
+font-family: 'SEGA LOGO FONT', sans-serif;  color: #222;
+  letter-spacing: 2px;
+}
+
+header input[type="search"] {
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  width: 60%;
+  max-width: 400px;
+}
+#card-container {
+  display: flex;
+  
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px;
+  gap: 20px;
+}
+
+.card {
+  background: url("https://github.com/devtlv/studentsGitHub/blob/master/JS/Week%204/Day5/Mini%20Projects/Mini%20Project%201%20(Robots)/card-pattern.png?raw=true");
+  background-color: #3bd3cf;
+  
+  flex: 1 1 calc(33.33% - 20px);
+  box-sizing: border-box;        
+  border-radius: 10px;
+  width: 150px;
+  padding: 50px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  border-radius: 50%;
+  background-color: #1b1b2f;
+}
+
+.card h2 {
+  font-size: 18px;
+  margin: 15px 0 5px;
+  color: #222;
+}
+
+.card p {
+  color: #333;
+  font-size: 14px;
+  margin: 0;
+}
+
+
+@media screen and (max-width: 900px) {
+
+  .card {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+
+header h1 {
+  display:none;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  margin: 5px;
+  
+}
+
+header input[type="search"] {
+  
+  font-size: 13px;
+  width: 100%;
+  max-width: 200px;
+}
+  .card {
+    flex: 1 1 100%;
+  }
+}
