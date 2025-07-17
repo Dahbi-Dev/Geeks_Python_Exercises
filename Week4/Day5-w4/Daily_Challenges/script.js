@@ -15,3 +15,18 @@ function isAnagram(str1, str2) {
 console.log(isAnagram("Astronomer", "Moon starer"));       
 console.log(isAnagram("School master", "The classroom"));  
 console.log(isAnagram("Hello", "World"));                  
+
+
+
+function outer() {
+  let outerVar = 10;
+
+  function inner() {
+    let innerVar = 5;
+    console.log(outerVar + innerVar);
+  }
+
+  inner();
+}
+
+outer();

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise XP</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      :root {
+        --color-clifford: #da373d;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900">
+    <div id="input-container" class="flex justify-center  sticky top-0 p-5 bg-gray-900 transparnt " >
+      <input type="text" id="input" onchange="fetchGiphy(this.value)" name="input" placeholder="Search for Something"  class="text-gray-500 bg-gray-800 border-2 border-gray-600 rounded-full px-1 py-1 text-center" />
+    </div>
+    
+    <div
+      class="  min-h-screen flex items-center justify-center"
+    >
+      <div id="container" class="flex flex-wrap gap-4 justify-center"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
