@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Giphy Fetch App</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @theme {
+        --color-clifford: #da373d;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-800 my-5 text-white">
+    <div class="rounded my-2 mx-auto w-80 md:w-180 p-5 rounded-lg shadow-lg grid bg-gray-700">
+      <form id="form" class="mx-auto h-30 w-100 md:w-200 md:h-10 md:flex ls gap-2">
+        <input
+          type="text"
+          placeholder="Enter Category"
+          id="input"
+          class="text-gray-200 border-2 p-1 border-blue-500 rounded w-70 md:w-80"
+        />
+        <div class="flex gap-2 mt-2 md:mt-0">
+          <button type="submit" class="p-1 w-28 rounded bg-blue-500 hover:bg-blue-600">
+            Fetch One
+          </button>
+          <button id="many" class="p-1 w-28 rounded bg-blue-500 hover:bg-blue-600">
+            Fetch Many
+          </button>
+          <button id="delete" class="p-1 w-28 rounded bg-red-500 hover:bg-red-600">
+            Delete All
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div
+      id="container"
+      class="h-100 md:h-130 overflow-auto border-2 border-gray-700 rounded flex flex-wrap justify-center bg-gray-600 w-80 md:w-180 mx-auto gap-3 p-4"
+    ></div>
+
+    <div
+      class="py-5 flex justify-between px-5 overflow-auto border-2 border-gray-700 rounded bg-gray-600 w-80 md:w-180 mx-auto"
+    >
+      <button
+        id="previous"
+        class="px-3 h-8 text-sm font-medium text-gray-200 bg-gray-700 border border-gray-500 rounded hover:bg-gray-600"
+      >
+        Previous
+      </button>
+      <button
+        id="next"
+        class="px-3 h-8 text-sm font-medium text-gray-200 bg-gray-700 border border-gray-500 rounded hover:bg-gray-600"
+      >
+        Next
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

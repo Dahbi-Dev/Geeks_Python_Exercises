@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ninja</title>
+    <style>
+      @media only screen and (max-width: 767px) {
+       #img-container{
+        columns: 1;
+       }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container" style="display: grid">
+      <div id="input-container">
+        <input
+          id="input"
+          type="text"
+          style="
+            margin: 0 auto;
+            border-radius: 8px;
+            border: 1 solid gray;
+            padding: 2px;
+          "
+          placeholder="type Something"
+        />
+        <button
+          onclick="fetchGifs()"
+          id="find"
+          style="
+            background-color: white;
+            border: 1 solid gray;
+            border-radius: 5px;
+          "
+        >
+          Find
+        </button>
+
+        <div style="gap: 20px; margin-top: 3px">
+          <button
+            onclick="Reset()"
+            id="delete"
+            style="
+              background-color: white;
+              border: 1 solid gray;
+              border-radius: 5px;
+            "
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+      <div  style="display: flex">
+        <div style="flex-direction: column">
+          <div id="img-container" style="columns: 5"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

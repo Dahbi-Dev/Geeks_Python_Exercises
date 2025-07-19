@@ -7,6 +7,7 @@ const fetchGiphy = async (searchName) => {
     container.innerHTML = "";
     let limit;
     let offset;
+    const api_key = "hpvZycW22qCjn5cRM1xtWB8NKq4dQ2My"
 
     if (searchName === 'sun') {
         // i change variable value to limit 10 gifs and start position is 2
@@ -24,7 +25,7 @@ const fetchGiphy = async (searchName) => {
     container.appendChild(loadingDiv);
 
     try {
-        const response = await fetch(`https://api.giphy.com/v1/gifs/search?q=${searchName}&rating=g&limit=${limit}&offset=${offset}&api_key=hpvZycW22qCjn5cRM1xtWB8NKq4dQ2My`)
+        const response = await fetch(`https://api.giphy.com/v1/gifs/search?q=${searchName}&rating=g&limit=${limit}&offset=${offset}&api_key=${api_key}`)
 
 
         if (!response.ok) {
