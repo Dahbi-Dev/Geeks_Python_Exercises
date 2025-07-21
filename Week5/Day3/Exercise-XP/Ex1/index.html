@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giphy Fetch App</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @theme {
+        --color-clifford: #da373d;
+      }
+      body {
+        background: black;
+        color: yellow;
+        font-family: "Arial Black", sans-serif;
+        background: url(./imgaes/bg-starts.webp);
+      }
+
+      .glow {
+        font-size: 4rem;
+        text-align: center;
+        margin-top: 2rem;
+        color: #ffeb3b;
+        text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700;
+        animation: flicker 1.5s infinite alternate;
+      }
+
+      @keyframes flicker {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.7;
+        }
+      }
+
+      .loader {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #ffeb3b;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 1rem auto;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @font-face {
+        font-family: "StarJedi";
+        src: url("/fonts/Starjedi.ttf") format("truetype");
+      }
+    </style>
+  </head>
+  <body
+    class="flex flex-col items-center justify-center h-screen text-center px-4"
+  >
+    <!-- Glowing Title -->
+    <h1 class="font-starjedi text-yellow-400 text-6xl drop-shadow-xl mb-10">STAR WARS</h1>
+
+    <!-- Message Box -->
+    <div
+      id="box"
+      class="border-4 border-yellow-400 rounded-xl p-6 text-xl my-8 w-full max-w-lg min-h-[120px] flex justify-center items-center text-white font-semibold"
+    >
+      <span id="message">Click the button to find someone.</span>
+    </div>
+
+    <!-- Button -->
+    <button
+      id="findBtn"
+      class="bg-yellow-300 text-black font-bold py-2 px-6 rounded-xl hover:bg-yellow-400 transition"
+    >
+      Find Someone
+    </button>
+
+    <script src="script.js"></script>
+  </body>
+</html>
