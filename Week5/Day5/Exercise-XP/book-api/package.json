@@ -1,0 +1,19 @@
+{
+  "name": "book-api",
+  "version": "1.0.0",
+  "description": "CRUD ",
+  "main": "app.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  },
+  "scripts": {
+    "start": "node-dev app.js"
+  },
+  "devDependencies": {
+    "node-dev": "^8.0.0"
+  }
+}
