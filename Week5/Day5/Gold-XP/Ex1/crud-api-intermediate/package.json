@@ -1,0 +1,20 @@
+{
+  "name": "crud-api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "commonjs",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "chalk": "^4.1.2",
+    "express": "^5.1.0",
+    "node-dev": "^8.0.0",
+    "nodemon": "^3.1.10"
+  },
+  "scripts": {
+    "start": "node-dev app.js"
+  }
+}
