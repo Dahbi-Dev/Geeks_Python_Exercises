@@ -1,4 +1,3 @@
-// ES6 syntax
 import express from "express";
 import postRouter from '../routes/posts.route.js'
 import dotenv from 'dotenv'
