@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-4">Register</h2>
+
+    <div id="message" class="mb-4 hidden p-3 rounded text-white text-center"></div>
+
+    <form id="registerForm" class="space-y-4">
+      <input name="username" placeholder="Username" class="w-full border p-2 rounded" required />
+      <input name="email" placeholder="Email" type="email" class="w-full border p-2 rounded" required />
+      <input name="first_name" placeholder="First Name" class="w-full border p-2 rounded" required />
+      <input name="last_name" placeholder="Last Name" class="w-full border p-2 rounded" required />
+      <input name="password" placeholder="Password" type="password" class="w-full border p-2 rounded" required />
+
+      <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded disabled:opacity-50" disabled>
+        Register
+      </button>
+    </form>
+
+    <p class="mt-4 text-sm text-gray-600">Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Login</a></p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const registerForm = document.getElementById('registerForm');
+      const messageDiv = document.getElementById('message');
+      const submitBtn = registerForm.querySelector('button[type="submit"]');
+
+      const showMessage = (text, type = 'error') => {
+        messageDiv.textContent = text;
+        messageDiv.classList.remove('hidden');
+        messageDiv.classList.remove('bg-green-500', 'bg-red-500');
+        messageDiv.classList.add(type === 'success' ? 'bg-green-500' : 'bg-red-500');
+      };
+
+      registerForm.addEventListener('input', () => {
+        const inputs = [...registerForm.elements].filter(el => el.tagName === 'INPUT');
+        const allFilled = inputs.every(input => input.value.trim() !== '');
+        submitBtn.disabled = !allFilled;
+      });
+
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = Object.fromEntries(new FormData(registerForm));
+        const res = await fetch('http://localhost:5000/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage('✅ Registration successful! You can now log in.', 'success');
+          registerForm.reset();
+          submitBtn.disabled = true;
+        } else {
+          showMessage(data.message === 'error1' ? '❌ Username or email already exists.' : '❌ Registration failed.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

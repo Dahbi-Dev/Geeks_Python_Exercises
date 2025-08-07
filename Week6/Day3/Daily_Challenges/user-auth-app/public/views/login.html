@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-4">Login</h2>
+
+    <div id="message" class="mb-4 hidden p-3 rounded text-white text-center"></div>
+
+    <form id="loginForm" class="space-y-4">
+      <input name="username" placeholder="Username" class="w-full border p-2 rounded" required />
+      <input name="password" placeholder="Password" type="password" class="w-full border p-2 rounded" required />
+
+      <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded disabled:opacity-50" disabled>
+        Login
+      </button>
+    </form>
+
+    <p class="mt-4 text-sm text-gray-600">Don't have an account? <a href="register.html" class="text-blue-600 hover:underline">Register</a></p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('loginForm');
+      const messageDiv = document.getElementById('message');
+      const submitBtn = loginForm.querySelector('button[type="submit"]');
+
+      const showMessage = (text, type = 'error') => {
+        messageDiv.textContent = text;
+        messageDiv.classList.remove('hidden');
+        messageDiv.classList.remove('bg-green-500', 'bg-red-500');
+        messageDiv.classList.add(type === 'success' ? 'bg-green-500' : 'bg-red-500');
+      };
+
+      loginForm.addEventListener('input', () => {
+        const inputs = [...loginForm.elements].filter(el => el.tagName === 'INPUT');
+        const allFilled = inputs.every(input => input.value.trim() !== '');
+        submitBtn.disabled = !allFilled;
+      });
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = Object.fromEntries(new FormData(loginForm));
+        const res = await fetch('http://localhost:5000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage('✅ Welcome back!', 'success');
+          loginForm.reset();
+          submitBtn.disabled = true;
+        } else {
+          if (data.message === 'error2') {
+            showMessage('❌ User does not exist. Try registering.');
+          } else if (data.message === 'Invalid password') {
+            showMessage('❌ Incorrect password.');
+          } else {
+            showMessage('❌ Login failed.');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
