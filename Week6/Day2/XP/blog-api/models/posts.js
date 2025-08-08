@@ -31,7 +31,6 @@ export const updatePost = async (id, {
 }
 export const deletePost = async (id) => {
     const result =  await pool.query('DELETE FROM posts WHERE id=$1', [id])
-
       return result.rowCount > 0;
 
 

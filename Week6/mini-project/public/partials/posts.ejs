@@ -1,0 +1,67 @@
+<div class="posts-section">
+    <div class="posts-header">
+        <h2 class="posts-title">Posts</h2>
+    </div>
+    
+    <% if (posts && posts.length > 0) { %>
+        <% posts.forEach(function(post) { %>
+            <div class="post-item">
+                <h3 class="post-title">
+                    <a href="<%= post.link %>" target="_blank" rel="noopener noreferrer">
+                        <%= post.title %>
+                    </a>
+                </h3>
+                
+                <div class="post-meta">
+                    <% if (post.pubDate) { %>
+                        <span><strong>Date:</strong> <%= new Date(post.pubDate).toLocaleDateString('en-GB', { 
+                            weekday: 'short', 
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            timeZone: 'UTC'
+                        }) %></span>
+                    <% } %>
+                    
+                    <% if (post.creator || post['dc:creator']) { %>
+                        | <span><strong>Author:</strong> <%= post.creator || post['dc:creator'] %></span>
+                    <% } %>
+                    
+                    <% if (post.categories && post.categories.length > 0) { %>
+                        | <span><strong>Categories:</strong> 
+                        <% post.categories.forEach(function(category, index) { %>
+                            <%= category %><%= index < post.categories.length - 1 ? ', ' : '' %>
+                        <% }); %>
+                        </span>
+                    <% } %>
+                </div>
+                
+                <% if (post.content || post.contentSnippet || post['content:encoded']) { %>
+                    <div class="post-content">
+                        <% 
+                        let content = post.content || post.contentSnippet || post['content:encoded'] || '';
+                        // Remove HTML tags and limit content length
+                        content = content.replace(/<[^>]*>/g, '').substring(0, 300);
+                        if (content.length === 300) content += '...';
+                        %>
+                        <%= content %>
+                    </div>
+                <% } %>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <div class="no-results">
+            <i class="bi bi-inbox"></i>
+            <h4>No posts found</h4>
+            <p>
+                <% if (typeof searchPerformed !== 'undefined' && searchPerformed) { %>
+                    No posts match your search criteria. Try different search terms.
+                <% } else { %>
+                    Unable to load posts at this time. Please try again later.
+                <% } %>
+            </p>
+        </div>
+    <% } %>
+</div>

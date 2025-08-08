@@ -1,0 +1,69 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<!-- Search Forms -->
+<div class="search-forms">
+    <h2 class="mb-4">Search Posts</h2>
+    
+    <!-- Search by Title Form -->
+    <div class="search-section">
+        <h3 class="search-title">Search by Title</h3>
+        <form action="/search/title" method="POST" class="row g-3">
+            <div class="col-md-8">
+                <input type="text" 
+                       class="form-control" 
+                       name="title" 
+                       placeholder="Enter keywords to search in post titles..." 
+                       required>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Search by Title
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <hr>
+    
+    <!-- Search by Category Form -->
+    <div class="search-section">
+        <h3 class="search-title">Search by Category</h3>
+        <form action="/search/category" method="POST" class="row g-3">
+            <div class="col-md-8">
+                <select class="form-select" name="category" required>
+                    <option value="">Select a category...</option>
+                    <% if (categories && categories.length > 0) { %>
+                        <% categories.forEach(function(category) { %>
+                            <option value="<%= category %>"><%= category %></option>
+                        <% }); %>
+                    <% } else { %>
+                        <option value="" disabled>No categories available</option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Search by Category
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Search Results Info -->
+<% if (typeof searchPerformed !== 'undefined' && searchPerformed) { %>
+    <div class="search-results-info">
+        <strong>Search Results:</strong>
+        <% if (typeof searchType !== 'undefined' && searchType === 'title') { %>
+            Found <%= posts.length %> post(s) containing "<%= searchTerm %>" in the title
+        <% } else if (typeof searchType !== 'undefined' && searchType === 'category') { %>
+            Found <%= posts.length %> post(s) in category "<%= searchTerm %>"
+        <% } %>
+    </div>
+<% } %>
+
+<!-- Posts Section -->
+<%- include('../partials/posts') %>
+
+<%- include('../partials/footer') %>

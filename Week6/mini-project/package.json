@@ -1,0 +1,24 @@
+{
+  "name": "rss-facts-feed",
+  "version": "1.0.0",
+  "description": "RSS Facts Feed Application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": ["rss", "facts", "feed", "express", "ejs"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "axios": "^1.4.0",
+    "ejs": "^3.1.9",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
