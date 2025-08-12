@@ -1,0 +1,29 @@
+/* Basic styling for the Exercise component */
+div {
+  text-align: center;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+h1, h3, p, a, ul {
+  margin: 10px 0;
+}
+
+form {
+  margin: 20px 0;
+}
+
+input, button {
+  margin: 5px;
+  padding: 5px 10px;
+}
+
+ul {
+  list-style-type: disc;
+  display: inline-block;
+  text-align: left;
+}
+
+li {
+  margin: 5px 0;
+} 
